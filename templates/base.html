@@ -10,9 +10,6 @@
     {% block styles %}
     {{ bootstrap.load_css() }}
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
-    <!-- Load Bootstrap-Flask CSS here -->
-
-    <!-- Link to the styles.css here to apply styling to all the child templates.-->
 
     {% endblock %}
     <title>{% block title %}{% endblock %}</title>

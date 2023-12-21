@@ -5,17 +5,14 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired, URL
 import csv
-import emoji
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 Bootstrap5(app)
 
-
 class CafeForm(FlaskForm):
     choices_coffee = [('☕️', '☕️'), ('☕️☕️', '☕️☕️'), ('☕️☕️☕️', '☕️☕️☕️'), ('☕️☕️☕️☕️', '☕️☕️☕️☕️'), ('☕️☕️☕️☕️☕️', '☕️☕️☕️☕️☕️')]
     choices_wifi = [('✘', '✘'), ('💪️', '💪️'), ('💪💪', '💪💪'), ('💪💪💪', '💪💪💪'), ('💪💪💪💪️', '💪💪💪💪️'), ('💪💪💪💪💪', '💪💪💪💪💪')]
-    # choices_power = [('✘', '✘'), ('🔌️', '🔌️'), ('🔌🔌', '🔌🔌'), ('🔌🔌🔌', '🔌🔌🔌'), ('🔌🔌🔌🔌', '🔌🔌🔌🔌'), ('🔌🔌🔌🔌🔌', '🔌🔌🔌🔌🔌')]
 
     cafe = StringField('Cafe name', validators=[DataRequired()])
     url = StringField('Cafe Location on Google Maps (URL)', validators=[DataRequired(), URL(require_tld=True)])
@@ -26,14 +23,6 @@ class CafeForm(FlaskForm):
     # power = SelectField('Power Socket Availability', validators=[DataRequired()], choices=choices_power)
     submit = SubmitField('Submit')
 
-# Exercise:
-# add: Location URL, open time, closing time, coffee rating, wifi rating, power outlet rating fields
-# make coffee/wifi/power a select element with choice of 0 to 5.
-#e.g. You could use emojis ☕️/💪/✘/🔌
-# make all fields required except submit
-# use a validator to check that the URL field has a URL entered.
-# ---------------------------------------------------------------------------
-
 def get_csv_data():
     with open('cafe-data.csv', newline='', encoding='utf-8') as csv_file:
         csv_data = csv.reader(csv_file, delimiter=',')
@@ -42,7 +31,6 @@ def get_csv_data():
             list_of_rows.append(row)
         return list_of_rows
 
-# all Flask routes below
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -59,7 +47,6 @@ def add_cafe():
         close_time = form.close_time.data
         rating = form.rating.data
         wifi = form.wifi.data
-        # power = form.power.data
 
         data_row = [cafe, url, open_time, close_time, rating, wifi]
         print(data_row)
@@ -69,10 +56,6 @@ def add_cafe():
             add_data.writerow(data_row)
 
         return render_template('success.html', cafe=cafe)
-
-    # Exercise:
-    # Make the form write a new row into cafe-data.csv
-    # with   if form.validate_on_submit()
     return render_template('add.html', form=form)
 
 
