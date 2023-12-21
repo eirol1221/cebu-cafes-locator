@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Success{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="display-4">Successfully added {{ cafe }} ☕️☕️☕️</h1>
+        <p class="space-above"><a href="{{url_for('add_cafe')}}">Add new cafes</a></p>
+        <p class="space-above"><a href="{{url_for('cafes')}}">See all cafes</a></p>
+    </div>
+{% endblock %}
